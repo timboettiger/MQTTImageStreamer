@@ -1,0 +1,19 @@
+version: '1.0'
+services:
+ mqtt-image-streamer:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: mqtt-image-streamer
+    restart: always
+    environment:
+      - SCREENSHOT_SIZE=1440x900
+      - SCREENSHOT_NOT_UPDATED_MSG=It's now safe to turn off\nyour computer.
+      - MQTT_BROKER=host.docker.internal
+      - MQTT_TOPIC=computer/status/display/0/screen
+      - STREAM_FPM=30
+      - STREAM_TIMEOUT=90
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
